@@ -1,0 +1,84 @@
+set nocompatible
+syntax enable
+call pathogen#infect()
+filetype plugin indent on
+set encoding=utf-8
+
+
+colorscheme zenburn
+set guifont=consolas:h11
+
+set guioptions-=T
+set ruler
+set cursorline
+set showcmd
+
+set hidden
+
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+
+set showmode " always show what mode we're currently editing in
+set nowrap " don't wrap lines
+set tabstop=2 " a tab is four spaces
+set expandtab " expand tabs by default (overloadable per file type later)
+set shiftwidth=2 " number of spaces to use for autoindenting
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+set number " always show line numbers
+set showmatch " set show matching parenthesis
+set smartcase " ignore case if search pattern is all lowercase,
+                                " case-sensitive otherwise
+                                " shiftwidth, not tabstop
+set scrolloff=4 " keep 4 lines off the edges of the screen when scrolling
+set gdefault " search/replace "globally" (on a line) by default
+set backupdir=c:\\Code\temp	
+
+" List chars
+set listchars=""                  " Reset the listchars
+set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
+set listchars+=trail:.            " show trailing spaces as dots
+set listchars+=extends:>          " The character to show in the last column when wrap is
+                                  " off and the line continues beyond the right of the screen
+set listchars+=precedes:<         " The character to show in the last column when wrap is
+                                  " off and the line continues beyond the right of the screen
+"" Searching
+set hlsearch                      " highlight matches
+set incsearch                     " incremental searching
+set ignorecase                    " searches are case insensitive...
+set smartcase                     " ... unless they contain at least one capital letter
+
+function s:setupWrapping()
+  set wrap
+  set wrapmargin=2
+  set textwidth=72
+endfunction
+
+
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+                   
