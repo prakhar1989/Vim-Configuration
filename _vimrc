@@ -45,8 +45,7 @@ set ignorecase                  " searches are case insensitive...
 :nnoremap <CR> :nohlsearch<cr> 
 
 "" Look
-colorscheme wombat
-set background=light
+colorscheme wombat 
 set guifont=Consolas:h12
 
 "GUI OPTIONS
@@ -116,3 +115,5 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 :nmap <Leader>v :e $MYVIMRC
 " <Leader> is \ by default, so those commands can be invoked by doing \v and \s
 
+"haml filetype
+au! BufRead,BufNewFile *.haml 
