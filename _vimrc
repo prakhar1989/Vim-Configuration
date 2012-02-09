@@ -45,7 +45,7 @@ set ignorecase                  " searches are case insensitive...
 :nnoremap <CR> :nohlsearch<cr> 
 
 "" Look
-colorscheme solarized
+colorscheme wombat
 set background=light
 set guifont=Consolas:h12
 
